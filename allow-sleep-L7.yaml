@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: "allow-sleep-to-helloworld"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      istio.io/gateway-name: helloworld
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/sleep"]
+    to:
+    - operation:
+        methods: ["GET"]        
